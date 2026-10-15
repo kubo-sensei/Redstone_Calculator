@@ -1,2 +1,1 @@
-Calculator_in_Minecraft
-A Minecraft redstone calculator for my DLCD PBL.
+A Redstone Calculator made in Minecraft 
