@@ -124,4 +124,4 @@ _(Add more modules here: clock/pulse generator, reset/clear, memory, operator se
 
 Sanjeev joshi
 
-Note: this project is still incomplete the things provided the the things which i already build. After the completition of project i'll upload the world file.
+Note: this project is still in progress and the things provided are the things i already build. After the completition of project i'll upload the world file.
