@@ -28,6 +28,7 @@ The diagrams show the logic only. Exact repeater ticks, dust routing and torch p
 | 7   | [Accumulator and Full Adder](#7-accumulator-and-full-adder)       | Does the arithmetic               |
 | 8   | [Operator Display](#8-operator-display)                           | Shows + - x /                     |
 | 9   | [Sign Bit Display](#9-sign-bit-display)                           | Shows the minus sign              |
+| 10  | [Two's Complement Machine](#10-twos-complement-machine)           | Negates a number when SIGNAL = 1  |
 
 ### How the modules connect
 
@@ -36,6 +37,7 @@ Keypad -> BCD encoder -> strobe -> pulse shortener -> clock
                       \-> 4-bit digit -> shift register -> decoders -> displays
                       \-> 4-bit digit -> accumulator (ACC x 10 + digit) -> sign bit display
 Operator keys -> operator display (symbol stays on screen)
+Operand -> two's complement machine (SIGNAL = 1 for subtraction) -> adder
 ```
 
 ---
@@ -184,3 +186,23 @@ The accumulator's sign bit drives a bar of lamps through a repeater. The bar is 
 <a href="sign_bit_display_logic.png"><img src="sign_bit_display_logic.png" width="600" alt="Sign bit display"></a>
 
 Build: [screenshot](../screenshots/sign_bit_display.png) | [schematic](../schematics/sign_bit_display.litematic)
+
+---
+
+## 10. [Two's Complement Machine](twos_complement_slice_gates.png)
+
+When `SIGNAL = 1`, converts the data bits to their two's complement. A flag `s` becomes 1 once any lower bit has been a 1. Each bit is inverted only when `s` and `SIGNAL` are both 1.
+
+```
+s(0)   = 0
+s(i+1) = s(i) OR b(i)
+out(i) = b(i) XOR (s(i) AND SIGNAL)
+```
+
+Bit 0 is always copied. With `SIGNAL = 0` the data passes through unchanged. Example (4 bits, `SIGNAL = 1`): `0110` becomes `1010`.
+
+<a href="twos_complement_slice_gates.png"><img src="twos_complement_slice_gates.png" width="600" alt="Two's complement bit slice"></a>
+
+<a href="twos_complement_chain.png"><img src="twos_complement_chain.png" width="600" alt="Two's complement chain"></a>
+
+Build: [screenshot](../screenshots/twos_complement.png) | [schematic](../schematics/Twos_Complement.litematic)
